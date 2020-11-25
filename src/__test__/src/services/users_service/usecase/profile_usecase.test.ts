@@ -1,4 +1,5 @@
 import { UserEntity } from "../../../../../services/users_service/entity";
+import { IUser } from "../../../../../services/users_service/service_repository";
 import ProfileUsecase from "../../../../../services/users_service/usecase/profile_usecase";
 import UsersTestRepository from "../../../../__mocks__/IuserRepo";
 
@@ -18,6 +19,10 @@ describe("ProfileUsecase", () => {
   const id = "1";
 
   describe("ProfileUsecase.changeProfilePhoto()", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     beforeEach(() => {
       const mockUpdate = jest.spyOn(testRepo, "UpdateUserField");
       mockUpdate.mockImplementation(() => {
@@ -46,24 +51,40 @@ describe("ProfileUsecase", () => {
   });
 
   describe("ProfileUsecase.fetchProfile()", () => {
-
-    it("should throw when passed invalid id", () => {
-    //todo:change the mock implementation to return null on findUser
-    //  const mockFindUser = jest
-    //    .spyOn(testRepo, "findUser")
-    //    .mockImplementation(() => {
-    //      return null;
-      //  });
-      expect(() => profileUsecase.fetchProfile("2")).rejects.toThrowError(
-        new Error("invalid id")
-      );
-     // mockFindUser.mockReset();
+    beforeEach(() => {
+      const user: IUser = {
+        name: "testUser",
+        password: "test",
+        email: "testUser@test.com",
+        phoneNumber: "13011999",
+        _id: "1",
+        Address: "testAddress",
+        profilePic: "testpath//test.jpg",
+      };
+      jest.spyOn(testRepo, "findUser").mockReturnValue(user);
     });
-    
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+  
     it("should sucessfully return a valid user entity", async () => {
       const result = await profileUsecase.fetchProfile(id);
       expect(result).toStrictEqual<UserEntity>(newUser);
     });
+
+    // it("should throw when passed invalid id", async () => {
+    //   //todo:change the mock implementation to return null on findUser
+    //   const spy = jest.spyOn(testRepo, "findUser").mockReturnValue({});
+
+    //   await expect(() => profileUsecase.fetchProfile("2")).rejects.toThrowError(
+    //     new Error("invalid id")
+    //   );
+
+    //   spy.mockReset();
+    //   spy.mockRestore();
+    // });
 
   });
 });
