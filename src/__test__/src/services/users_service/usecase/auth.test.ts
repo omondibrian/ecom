@@ -13,7 +13,6 @@ class AuthServiceUtilities implements IAuthserviceUtilities {
   loginValidation(
     _entityBody: unknown
   ): { error: { details: { message: string }[] } | false } {
-    
     return { error: false };
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -23,7 +22,12 @@ class Mailer implements IMailer {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sendemail(_from: unknown, _to: unknown, _subject: unknown, _html: unknown): Promise<unknown> | any {}
+  sendemail(
+    _from: unknown,
+    _to: unknown,
+    _subject: unknown,
+    _html: unknown
+  ): Promise<unknown> | any {}
 }
 
 // const mocked = UsersTestRepository as jest.Mocked<typeof UsersTestRepository>;  // Let TypeScript know mocked is an auto-mock of the module
@@ -103,10 +107,12 @@ describe("AuthenticationUsecase", () => {
       mockLoginValidation.mockClear();
     });
 
-    it("should throw an error if an invalid password is passed", () => {
+    it("should throw an error if an invalid password is passed", async () => {
       const mockedBcrypt = jest.spyOn(bcrypt, "compare");
       mockedBcrypt.mockImplementationOnce(() => false);
-      expect(() => authService.logInUser(userCredentials)).rejects.toThrowError(
+      await expect(() =>
+        authService.logInUser(userCredentials)
+      ).rejects.toThrowError(
         new Error("Error authenticating please try again !")
       );
       // expect(bcrypt.compare).toHaveBeenCalled();
@@ -128,6 +134,16 @@ describe("AuthenticationUsecase", () => {
   });
   describe("AuthenticationUsecase.registeruser()", () => {
     beforeEach(() => {
+      const mockFindUser = jest.spyOn(testRepo, "findUser");
+      mockFindUser.mockReturnValue(undefined);
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should successfully register new user", async () => {
+      //setup mocks
       const mockregistrationValidation = jest.spyOn(
         testUtilities,
         "registrationValidation"
@@ -135,18 +151,7 @@ describe("AuthenticationUsecase", () => {
       mockregistrationValidation.mockImplementationOnce(() => {
         return { error: false };
       });
-      const mockFindUser = jest.spyOn(testRepo, "findUser");
-      mockFindUser.mockReturnValue(undefined);
-    });
-    afterEach(()=>{
-      const mockregistrationValidation = jest.spyOn(
-        testUtilities,
-        "registrationValidation"
-      );
-      mockregistrationValidation.mockReset()
-    })
 
-    it("should successfully register new user", async () => {
       const result = await authService.registeruser(newUser);
       expect(testUtilities.registrationValidation).toHaveBeenCalledWith(
         newUser
@@ -165,7 +170,7 @@ describe("AuthenticationUsecase", () => {
       }>({ message: "registration sucessfull", token: "1234567", _id: "1" });
     });
 
-    it("should throw TypeError if invalid credentials are passed", () => {
+    it("should throw TypeError if invalid credentials are passed", async () => {
       const mockValidation = jest.spyOn(
         testUtilities,
         "registrationValidation"
@@ -181,34 +186,44 @@ describe("AuthenticationUsecase", () => {
           },
         };
       });
-      expect(() => authService.registeruser(newUser)).rejects.toThrowError(
-        new TypeError("testing error")
-      );
-      mockValidation.mockClear()
+      await expect(() =>
+        authService.registeruser(newUser)
+      ).rejects.toThrowError(new TypeError("testing error"));
+      mockValidation.mockClear();
     });
 
-    it("should throw Error if email exists", () => {
+    it("should throw Error if email exists", async () => {
       const mockValidation = jest.spyOn(
         testUtilities,
         "registrationValidation"
       );
       mockValidation.mockImplementationOnce(() => {
         return {
-          error: false
+          error: false,
         };
       });
       jest.spyOn(testRepo, "findUser").mockReturnValue(newUser);
-      expect(() => authService.registeruser(newUser)).rejects.toThrowError(
-        new Error("email already exists")
-      );
-      mockValidation.mockClear()
+      await expect(() =>
+        authService.registeruser(newUser)
+      ).rejects.toThrowError(new Error("email already exists"));
+      mockValidation.mockClear();
     });
 
-    it("should throw an error if registration is unsuccefull", () => {
+    it("should throw an error if registration is unsuccesfull", async () => {
+      const mockregistrationValidation = jest.spyOn(
+        testUtilities,
+        "registrationValidation"
+      );
+      mockregistrationValidation.mockImplementationOnce(() => {
+        return { error: false };
+      });
+      
       jest.spyOn(testRepo, "saveUser").mockImplementationOnce(() => {
         throw new Error("testError");
       });
-      expect(() => authService.registeruser(newUser)).rejects.toThrowError(
+      await expect(() =>
+        authService.registeruser(newUser)
+      ).rejects.toThrowError(
         new Error(
           `${{ message: "registration unsucessfull", error: "testError" }}`
         )

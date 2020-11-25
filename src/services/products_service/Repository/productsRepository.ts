@@ -5,6 +5,9 @@ export interface IProductRepository {
   addProduct(searchParam: IproductEntity): Promise<IproductEntity>;
   updateProduct(payload: {
     productId: string;
-    fields:Array<{key:string,value:string}>;
+    fields: Array<{ key: string; value: string }>;
   }): Promise<IproductEntity>;
+  deleteProduct(
+    productId: string
+  ): Promise<{ deletedProduct: IproductEntity; deleted: boolean }>;
 }

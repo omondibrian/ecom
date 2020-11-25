@@ -24,9 +24,7 @@ export default class ProfileUsecase {
 
   async fetchProfile(id: string): Promise<UserEntity> {
     const result: UserEntity = await this.repository.findUser({ _id: id });
-    if (!result) new Error("invalid id");
     const { _id, Address, email, name, phoneNumber, profilePic } = result;
-
     return { _id, Address, email, name, phoneNumber, profilePic };
   }
 }
