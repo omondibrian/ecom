@@ -1,8 +1,12 @@
 import UsersServiceRepository from "../../../../../services/users_service/service_repository";
+import User from "../../../../../services/users_service/service_repository/models/user.modal";
 
 const repository = new UsersServiceRepository();
 
 describe("UsersServiceRepository", () => {
+  afterAll(()=>{
+    User.knex().destroy()
+  })
   const newUser: UsersService.IUserModel = {
     name: "testUser",
     _id: 1,
@@ -95,4 +99,5 @@ describe("UsersServiceRepository", () => {
       expect(updates).toStrictEqual<UsersService.UserEntity>(updatedUser);
     });
   });
+
 });

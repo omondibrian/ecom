@@ -8,19 +8,22 @@
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc --build tsconfig.json",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "test": "jest --coverage ",
     "setup": "npm run rollBack && npm run migrations && npm run seed",
     "migrations": "knex migrate:latest",
     "rollBack": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "coverage": "coveralls < ./coverage/lcov.info "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
     "knex": "^0.21.2",
     "mysql": "^2.18.1",
+    "nyc": "^15.1.0",
     "objection": "^2.2.3",
     "pg": "^8.3.0",
     "sqlite3": "^5.0.0"

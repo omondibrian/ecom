@@ -3,22 +3,11 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+on: ["push"]
 jobs:
- container-job:
-    # Containers must run in Linux based operating systems
+  build:
+    name: Build
     runs-on: ubuntu-latest
-  
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
-    # Service containers to run with `container-job`
     services:
       # Label used to access the service container
       postgres:
@@ -26,41 +15,56 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: rootUser
           POSTGRES_USER: dev
-          POSTGRES_DB : ecom
-        # Set health checks to wait until postgres has started
+          POSTGRES_PASSWORD: rootUser
+          POSTGRES_DB: ecom
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
+        ports:
+          # Maps TCP port 5432 on service container to the host
+          - 5432:5432
+    env:
+      # POSTGRES_DB: postgresql://dev:rootUser@localhost:5432/ecom
+      POSTGRES_PASSWORD: rootUser
+      POSTGRES_USER: dev
+      POSTGRES_DB: ecom
+      JWT_SECRET: keyboard_cat
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+          
     steps:
-      # Downloads a copy of the code in your repository before running CI tests
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
         node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - name: Connect to PostgreSQL and make migrations
-        # Runs a script that creates a PostgreSQL client, populates
-        # the client with tables
-        run: make migrations 
-      - name: populate the test database with test database
-        run: make seed
-        # Environment variable used by the `client.js` script to create a new PostgreSQL client.
-        # - run: npm run build --if-present
-      - run: npm test
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          POSTGRES_PASSWORD: rootUser
-          POSTGRES_USER: dev
-          POSTGRES_DB : ecom
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-          JWT_SECRET : keyboard_cat
+    - run: npm install
+    - run: make migrations
+    - run: make seed
+    - run: npm run test 
+    
+
+
+  
+
+  # coverage:
+  #   name: Coveralls
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x]
+          
+  #   steps:
+  #   - uses: coverallsapp/github-action@master
+  #     env:
+  #       COVERALLS_REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  #     with:
+  #       github-token: ${{ secrets.GITHUB_TOKEN }}
+  #       path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+
 
 
