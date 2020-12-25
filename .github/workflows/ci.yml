@@ -39,12 +39,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm run test --if-present
+    - run: make migrations
+    - run: make seed
+    - run: npm run test 
+
   
 
   coverage:
     name: Coveralls
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x, 14.x]
