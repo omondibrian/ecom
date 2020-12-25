@@ -1,4 +1,4 @@
-import { OrderEntity, Receipt } from "../entity/orderEntity";
+import { OrderEntity } from "../entity/orderEntity";
 
 export interface IOrdersRepository {
   //to throw an error if update is not succesfull

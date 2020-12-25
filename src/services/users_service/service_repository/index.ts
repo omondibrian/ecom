@@ -1,5 +1,4 @@
 import TableName from "../../../constants/tableNames";
-import Address from "./models/address.model";
 import User from "./models/user.modal";
 
 export default class UsersServiceRepository

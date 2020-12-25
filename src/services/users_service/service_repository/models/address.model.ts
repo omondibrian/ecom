@@ -39,8 +39,3 @@ export default class Address extends Model {
   };
 }
 
-(function evec(){
-  console.log(`Address = ${
-    Address.query().withGraphJoined([TableName.address, TableName.country, TableName.city])
-  }`);
-})
