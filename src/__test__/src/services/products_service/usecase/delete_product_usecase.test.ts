@@ -1,5 +1,5 @@
-import { DeleteProductInfo } from "../../../../services/products_service/usecases/delete_product_usecase";
-import { ProductsTestRepository } from "../../../__mocks__/productsRepo";
+import { DeleteProductInfo } from "../../../../../services/products_service/usecases/delete_product_usecase";
+import { ProductsTestRepository } from "../../../../__mocks__/productsRepo";
 
 const testRepo = new ProductsTestRepository();
 const deleteProductInfo = new DeleteProductInfo(testRepo);

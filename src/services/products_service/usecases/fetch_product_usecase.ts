@@ -27,5 +27,11 @@ export class FetchProductUsecase {
     const products = await this.repository.findAll();
     return products;
   }
-  //todo: implement method to fetchAll products belonging to a single distributor
+
+  async distributorProducts(distributorID: string) {
+    const distributorProds = await this.repository.distributorProducts(
+      distributorID
+    );
+    return distributorProds;
+  }
 }

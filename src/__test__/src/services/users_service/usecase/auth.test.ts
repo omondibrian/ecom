@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import AuthenticationUsecase from "../../../../../services/users_service/usecase/auth";
-import {
-  IUser,
-  UserCredentials,
-} from "../../../../../services/users_service/service_repository";
+
 import { IAuthserviceUtilities } from "../../../../../services/serviceUtility";
 import { IMailer } from "../../../../../services/email_service/mailer";
 import UsersTestRepository from "../../../../__mocks__/IuserRepo";
@@ -23,14 +20,15 @@ class Mailer implements IMailer {
   constructor() {}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendemail(
-    _from: unknown,
-    _to: unknown,
-    _subject: unknown,
-    _html: unknown
+    _from: string,
+    _to: string,
+    _subject: string,
+    _html: string
   ): Promise<unknown> | any {}
 }
 
-// const mocked = UsersTestRepository as jest.Mocked<typeof UsersTestRepository>;  // Let TypeScript know mocked is an auto-mock of the module
+// Let TypeScript know mocked is an auto-mock of the module
+// const mocked = UsersTestRepository as jest.Mocked<typeof UsersTestRepository>;  
 // const AuthenticationService = mocked.default;  // AuthenticationService has correct TypeScript typing
 class Bcrypt {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -66,18 +64,28 @@ describe("AuthenticationUsecase", () => {
     jest.spyOn(testRepo, "findUser").mockClear();
     jest.spyOn(bcrypt, "hash").mockClear();
     jest.spyOn(testRepo, "saveUser").mockClear();
-  });
-  const newUser: IUser = {
+  });   
+  const newUser: UsersService.IUserModel = {
     name: "testUser",
     password: "test",
     email: "testUser@test.com",
     phoneNumber: "13011999",
-    _id: "1",
-    Address: "testAddress",
+    _id: 1,
+    Address: {
+      street_address_1: "testStreet",
+      street_address_2:null,
+      P_O_BOX: "536-20115 TestArea",
+      city: {
+        name: "Nairobi",
+      },
+      country: {
+        name: "kenya",
+      },
+    },
     profilePic: "testpath//test.jpg",
   };
 
-  const userCredentials: UserCredentials = {
+  const userCredentials: UsersService.UserCredentials = {
     password: "test",
     email: "testUser@test.com",
     phoneNumber: "13011999",
@@ -217,7 +225,7 @@ describe("AuthenticationUsecase", () => {
       mockregistrationValidation.mockImplementationOnce(() => {
         return { error: false };
       });
-      
+
       jest.spyOn(testRepo, "saveUser").mockImplementationOnce(() => {
         throw new Error("testError");
       });

@@ -1,31 +1,45 @@
-import { UserEntity } from "../../services/users_service/entity";
-import {
-  IUserRepository,
-  validationFields,
-  IUser, IUpdateField
-} from "../../services/users_service/service_repository";
-
-export default class UsersTestRepository implements IUserRepository {
+export default class UsersTestRepository
+  implements UsersService.IUserRepository {
   constructor() {}
-  findUser(options: validationFields): Promise<IUser> | any {
-    const user: IUser = {
+  findUser(
+    options: UsersService.validationFields
+  ): Promise<UsersService.IUser> | any {
+    const user: UsersService.IUserModel = {
       name: "testUser",
       password: "test",
       email: "testUser@test.com",
       phoneNumber: "13011999",
-      _id: "1",
-      Address: "testAddress",
+      _id: 1,
+      Address: {
+        street_address_1: "testStreet",
+        street_address_2: null,
+        P_O_BOX: "536-20115 TestArea",
+        city: {
+          name: "Nairobi",
+        },
+        country: {
+          name: "kenya",
+        },
+      },
       profilePic: "testpath//test.jpg",
     };
-    return new Promise((res, rej) => {
-      res(user);
-    });
+    return Promise.resolve(user);
   }
-  async saveUser(options: IUser): Promise<UserEntity> {
-    return options as UserEntity;
+  async saveUser(
+    options: UsersService.IUserModel
+  ): Promise<UsersService.UserEntity> {
+    const { Address, phoneNumber, profilePic, email, name, _id } = options;
+    return {
+      Address,
+      phoneNumber,
+      name,
+      profilePic,
+      email,
+      _id: _id + "",
+    };
   }
-  UpdateUserField(inputs:{
-    options: validationFields,
-    updateParam: IUpdateField,
-  }): Promise<UserEntity> | any {}
+  UpdateUserField(inputs: {
+    options: UsersService.validationFields;
+    updateParam: UsersService.IUpdateField;
+  }): Promise<UsersService.UserEntity> | any {}
 }

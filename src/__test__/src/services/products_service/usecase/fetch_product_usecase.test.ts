@@ -10,9 +10,9 @@ describe("FetchProductUsecase", () => {
     name: "testProduct",
     Qty: 12,
     price: "$12",
-    discount:'$2.0',
+    discount: "$2.0",
     distributor_id: "12",
-    productPic:"/picture",
+    productPic: "/picture",
     _id: "1",
   };
   describe("FetchProductUsecase.fetch", () => {
@@ -61,7 +61,31 @@ describe("FetchProductUsecase", () => {
     it("should fetch all available products", async () => {
       const result = await fetchProductUsecase.fetchAllProducts();
       expect(result).toStrictEqual<Array<IproductEntity>>([product, product]);
-      expect(testRepo.findAll).toHaveBeenCalled()
+      expect(testRepo.findAll).toHaveBeenCalled();
+    });
+  });
+
+  describe("FetchProductUsecase.fetchAllDistributorProducts", () => {
+    const productArr = [{ ...product }, { ...product }];
+    //setup
+    beforeAll(() => {
+      jest
+        .spyOn(testRepo, "distributorProducts")
+        .mockImplementation(async () => {
+          return productArr;
+        });
+    });
+    //tearDown
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+    it("should fetch all available products belonging to the same distributor", async () => {
+      const distributorID = "12";
+      const result = await fetchProductUsecase.distributorProducts(
+        distributorID
+      );
+      expect(result).toStrictEqual<Array<IproductEntity>>([product, product]);
+      expect(testRepo.distributorProducts).toHaveBeenCalled();
     });
   });
 });

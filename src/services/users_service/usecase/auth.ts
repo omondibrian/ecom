@@ -1,11 +1,10 @@
-import { IUser, IUserRepository, UserCredentials } from "../service_repository";
 import { IAuthserviceUtilities } from "../../serviceUtility";
 import { IMailer } from "../../email_service/mailer";
-import { UserEntity } from "../entity";
+
 
 export default class AuthenticationUsecase {
   constructor(
-    private readonly repository: IUserRepository,
+    private readonly repository: UsersService.IUserRepository,
     private readonly utilities: IAuthserviceUtilities,
     private readonly jwt: any,
     private readonly bcrypt: any,
@@ -13,15 +12,15 @@ export default class AuthenticationUsecase {
     private readonly mailer: IMailer
   ) {}
 
-  //todo:catch execeptions in the main user's service route
-  async logInUser(credentials: UserCredentials) {
+  //TODO:catch execeptions in the main user's service route
+  async logInUser(credentials: UsersService.UserCredentials) {
     //validate the user input
     const { error } = this.utilities.loginValidation(credentials);
     if (error) throw new TypeError(`${error.details[0].message}`);
     //check if the email or phoneNumber passed exists doesn't exists
     const user = await this.repository.findUser({
       email: credentials.email,
-      phoneNumber: credentials.phoneNumber,
+      phone_number: credentials.phoneNumber,
     });
     // if (!user) throw new Error("Error authenticating please try again !");
     //check if password is correct
@@ -35,11 +34,11 @@ export default class AuthenticationUsecase {
 
     //create and assign an authentification token
     const token = this.jwt.sign({ _id: user._id }, process.env.SECREATE_TOKEN);
-    //todo:add "AUTH_TOKEN" header and token value to the response custom header
-    return { _id: user._id, token };
+    //TODO:add "AUTH_TOKEN" header and token value to the response custom header
+    return { _id: user._id + "", token };
   }
 
-  async registeruser(newUser: IUser) {
+  async registeruser(newUser: UsersService.IUserModel) {
     //validate the user input
     const { error } = this.utilities.registrationValidation(newUser);
     if (error) throw new TypeError(`${error.details[0].message}`);
@@ -47,7 +46,7 @@ export default class AuthenticationUsecase {
     //check if the email and phoneNumber already exists
     const [emailExists, phoneNumber] = await Promise.all([
       this.repository.findUser({ email: newUser.email }),
-      this.repository.findUser({ phoneNumber: newUser.phoneNumber }),
+      this.repository.findUser({ phone_number: newUser.phoneNumber }),
     ]);
     if (emailExists) throw new Error("email already exists");
     if (phoneNumber) throw new Error("phoneNumber already exists");
@@ -60,9 +59,9 @@ export default class AuthenticationUsecase {
     //flag the account as inactive
     //create a new user
     try {
-      const name = Date.now() + " " + newUser.profilePic;
-      const image = `/uploads/${encodeURIComponent(name)}`;
-      const user: UserEntity = await this.repository.saveUser({
+      const imageName = Date.now() + " " + newUser.profilePic;
+      const image = `/uploads/${encodeURIComponent(imageName)}`;
+      const user: UsersService.UserEntity = await this.repository.saveUser({
         ...newUser,
         password: encrptedPass,
         profilePic: image,
@@ -71,14 +70,14 @@ export default class AuthenticationUsecase {
       return {
         message: "registration sucessfull",
         token: secreateToken,
-        _id: user._id,
+        _id: user._id + "",
       };
     } catch (error) {
       throw new Error(`${{ message: "registration unsucessfull", error }}`);
     }
   }
 
-  async forgotPass(credentials: UserCredentials) {
+  async forgotPass(credentials: UsersService.UserCredentials) {
     const { email } = credentials;
     const secreateToken = this.generate(7);
     //encrpte the password

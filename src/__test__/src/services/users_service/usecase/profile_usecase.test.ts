@@ -1,16 +1,25 @@
-import { UserEntity } from "../../../../../services/users_service/entity";
-import { IUser } from "../../../../../services/users_service/service_repository";
+
 import ProfileUsecase from "../../../../../services/users_service/usecase/profile_usecase";
 import UsersTestRepository from "../../../../__mocks__/IuserRepo";
 
 const testRepo = new UsersTestRepository();
 
-const newUser: UserEntity = {
+const newUser: UsersService.UserEntity = {
   name: "testUser",
   email: "testUser@test.com",
   phoneNumber: "13011999",
   _id: "1",
-  Address: "testAddress",
+  Address: {
+    street_address_1: "testStreet",
+    street_address_2:null,
+    P_O_BOX: "536-20115 TestArea",
+    city: {
+      name: "Nairobi",
+    },
+    country: {
+      name: "kenya",
+    },
+  },
   profilePic: "testpath//test.jpg",
 };
 
@@ -52,13 +61,23 @@ describe("ProfileUsecase", () => {
 
   describe("ProfileUsecase.fetchProfile()", () => {
     beforeEach(() => {
-      const user: IUser = {
+      const user:UsersService.IUserModel = {
         name: "testUser",
         password: "test",
         email: "testUser@test.com",
         phoneNumber: "13011999",
-        _id: "1",
-        Address: "testAddress",
+        _id: 1,
+        Address: {
+          street_address_1: "testStreet",
+          street_address_2:null,
+          P_O_BOX: "536-20115 TestArea",
+          city: {
+            name: "Nairobi",
+          },
+          country: {
+            name: "kenya",
+          },
+        },
         profilePic: "testpath//test.jpg",
       };
       jest.spyOn(testRepo, "findUser").mockReturnValue(user);
@@ -71,7 +90,7 @@ describe("ProfileUsecase", () => {
   
     it("should sucessfully return a valid user entity", async () => {
       const result = await profileUsecase.fetchProfile(id);
-      expect(result).toStrictEqual<UserEntity>(newUser);
+      expect(result).toStrictEqual<UsersService.UserEntity>(newUser);
     });
 
     // it("should throw when passed invalid id", async () => {

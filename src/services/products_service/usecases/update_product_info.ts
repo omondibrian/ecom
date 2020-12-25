@@ -10,6 +10,7 @@ export class UpdateProductInfo {
       price?: string;
       discount?: string;
       productPic?: string;
+      Qty?:string
     };
   }): Promise<IproductEntity> {
     const { _id, updatedFields } = payload;
@@ -17,7 +18,8 @@ export class UpdateProductInfo {
     const values = Object.values(updatedFields);
     let fields: Array<{ key: string; value: string }> = [];
     //O(n)
-    for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+    let keyIndex = keys.length;
+    while (keyIndex--) {
       const value = values[keyIndex];
       const key = keys[keyIndex];
       let field = { key, value };
