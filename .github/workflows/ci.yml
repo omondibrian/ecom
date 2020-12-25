@@ -27,7 +27,11 @@ jobs:
           # Maps TCP port 5432 on service container to the host
           - 5432:5432
     env:
-      POSTGRES_DB: postgresql://dev:rootUser@localhost:5432/ecom
+      # POSTGRES_DB: postgresql://dev:rootUser@localhost:5432/ecom
+      POSTGRES_PASSWORD: rootUser
+      POSTGRES_USER: dev
+      POSTGRES_DB: ecom
+      JWT_SECRET: keyboard_cat
     strategy:
       matrix:
         node-version: [12.x, 14.x]
@@ -42,6 +46,8 @@ jobs:
     - run: make migrations
     - run: make seed
     - run: npm run test 
+    
+
 
   
 
