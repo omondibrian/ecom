@@ -1,7 +1,6 @@
 import { IAuthserviceUtilities } from "../../serviceUtility";
 import { IMailer } from "../../email_service/mailer";
 
-
 export default class AuthenticationUsecase {
   constructor(
     private readonly repository: UsersService.IUserRepository,
