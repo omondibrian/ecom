@@ -107,7 +107,7 @@ export async function seed(knex: Knex): Promise<void> {
     product_id: ProdID[0]._id,
   };
   await knex(TableName.productDetails).insert(prodDetails);
-  const prodDetailsRes = await knex.select("*").from(TableName.productDetails);
+  await knex.select("*").from(TableName.productDetails);
 
   const transcation = {
     user_id: user[0]._id,
