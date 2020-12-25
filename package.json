@@ -13,7 +13,7 @@
     "migrations": "knex migrate:latest",
     "rollBack": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "coverage": "nyc npm run test && nyc report --reporter=text-lcov --reporter=lcov | node ./node_modules/coveralls/bin/coveralls.js --verbose"
+    "coverage": "coveralls < ./coverage/lcov.info "
   },
   "keywords": [],
   "author": "",
