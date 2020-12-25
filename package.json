@@ -6,9 +6,13 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:dev": "nodemon",
-    "build": "rimraf ./build && tsc",
+    "build": "rimraf ./build && tsc --build tsconfig.json",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "setup": "npm run rollBack && npm run migrations && npm run seed",
+    "migrations": "knex migrate:latest",
+    "rollBack": "knex migrate:rollback",
+    "seed": "knex seed:run"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +20,10 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "knex": "^0.21.2",
-    "pg": "^8.3.0"
+    "mysql": "^2.18.1",
+    "objection": "^2.2.3",
+    "pg": "^8.3.0",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",

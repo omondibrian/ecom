@@ -87,9 +87,29 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -98,39 +118,32 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { UserEntity } from "../entity";
-import { IUserRepository } from "../service_repository";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 &nbsp;
-export type ProfileInputs = {
-  _id: string;
-  payload: string;
-};
 &nbsp;
 export default class ProfileUsecase {
-  constructor(private readonly repository: IUserRepository) {}
+  constructor(private readonly repository: UsersService.IUserRepository) {}
 &nbsp;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async changeProfilePhoto({ _id, payload }: ProfileInputs) {
-    const { profilePic }: UserEntity = await this.repository.UpdateUserField({
+  async changeProfilePhoto({ _id, payload }: UsersService.ProfileInputs) {
+    const { profilePic }: UsersService.UserEntity = await this.repository.UpdateUserField({
       options: { _id },
       updateParam: { field: "profilePic", value: payload },
     });
@@ -141,10 +154,24 @@ export default class ProfileUsecase {
     };
   }
 &nbsp;
-  async fetchProfile(id: string): Promise&lt;UserEntity&gt; {
-    const result: UserEntity = await this.repository.findUser({ _id: id });
-    const { _id, Address, email, name, phoneNumber, profilePic } = result;
-    return { _id, Address, email, name, phoneNumber, profilePic };
+  async fetchProfile(id: string): Promise&lt;UsersService.UserEntity&gt; {
+    const result: UsersService.IUserModel = await this.repository.findUser({ _id: id });
+    const {
+      _id,
+      address,
+      email,
+      name,
+      phone_number,
+      profile_image_url,
+    } = result;
+    return {
+      _id: _id + "",
+      Address:address,
+      email,
+      name,
+      phoneNumber: phone_number,
+      profilePic: profile_image_url,
+    };
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -154,7 +181,7 @@ export default class ProfileUsecase {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Nov 25 2020 15:16:31 GMT+0300 (East Africa Time)
+                at Tue Dec 22 2020 21:19:41 GMT+0300 (East Africa Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
