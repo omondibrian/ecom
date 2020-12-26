@@ -18,7 +18,7 @@ In order to setup the project in your local machine:-
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+1.make sure that node and npm is installed in ur machine
 * npm
   ```sh
   npm install npm@latest -g
@@ -26,7 +26,7 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+
 2. Clone the repo
    ```sh
    git clone https://github.com/omondibrian/ecom.git
