@@ -4,7 +4,7 @@
 
 ## About The Project
 
-Ecom is a practice ecommerce backend Api made to explore the inner workings of a real world ecommerce platforms 
+Ecom is a practice ecommerce backend Api made to explore the inner workings of a real world ecommerce platforms .the project is still in progress
 
 ### Built With
 the project is built using the Nodejs platform and :-
