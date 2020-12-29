@@ -1,5 +1,4 @@
 import TableName from "../../../constants/tableNames";
-import Vendor from "../../users_service/service_repository/models/vendor.model";
 import Product from "./models/products.model";
 import ProductDetails from "./models/product_details.model";
 

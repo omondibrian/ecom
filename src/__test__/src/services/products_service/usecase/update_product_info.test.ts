@@ -33,7 +33,7 @@ describe("UpdateProductInfo", () => {
           name: "updatedTestProduct",
           price: "15",
           discount: "3.0",
-         vat:8.0
+         vat:8
         },
       });
 

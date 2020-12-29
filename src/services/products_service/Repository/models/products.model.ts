@@ -4,7 +4,6 @@ import TableName from "../../../../constants/tableNames";
 import knex from "knex";
 import { con as knexConfig } from "../../../../constants/config";
 import ProductDetails from "./product_details.model";
-import Vendor from "../../../users_service/service_repository/models/vendor.model";
 
 const environment = process.env.NODE_ENV || "development";
 const connectionConfig = knexConfig[environment];
