@@ -15,7 +15,7 @@ describe("UpdateProductInfo", () => {
             name: "updatedTestProduct",
             price: "15",
             discount: "3.0",
-            vat:80,
+            vat:8,
             distributor_id: "12",
             Qty: 12,
           };
@@ -42,7 +42,7 @@ describe("UpdateProductInfo", () => {
         name: "updatedTestProduct",
         price: "15",
         discount: "3.0",
-        vat:8.0,
+        vat:8,
         distributor_id: "12",
         Qty: 12,
       });
