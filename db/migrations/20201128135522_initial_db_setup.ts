@@ -23,7 +23,7 @@ export async function up(knex: Knex): Promise<void> {
         addDefaultColumns(table);
       }
     ), //Address table
-    //TODO: should add the users/vendors id field relation 
+    //TODO: should add the users/vendors id field relation
     await knex.schema.createTable(
       TableName.address,
       (table: Knex.CreateTableBuilder) => {
@@ -78,7 +78,6 @@ export async function up(knex: Knex): Promise<void> {
     }
   );
 
-
   //category table
   await knex.schema.createTable(
     TableName.category,
@@ -97,21 +96,6 @@ export async function up(knex: Knex): Promise<void> {
       createRef(table, TableName.additionalInfo);
     }
   );
-  //product table
-  await knex.schema.createTable(
-    TableName.product,
-    (table: Knex.CreateTableBuilder) => {
-      table.increments("_id").notNullable().primary();
-      table.string("name").notNullable();
-      table.integer("quantity_in_stock").notNullable();
-      table.integer("price").notNullable();
-      table.integer("vat");
-      table.integer("discount");
-      createRef(table, TableName.Vendor);
-      createRef(table, TableName.category);
-      createRef(table, TableName.subCategory);
-    }
-  );
 
   //product_details table
   await knex.schema.createTable(
@@ -125,10 +109,29 @@ export async function up(knex: Knex): Promise<void> {
       table.string("rare_view_image_url");
       table.string("left_view_image_url");
       table.string("right_view_image_url");
-      createRef(table, TableName.product);
+      createRef(table, TableName.category);
+      createRef(table, TableName.subCategory);
     }
   );
+
+  //product table
+  await knex.schema.createTable(
+    TableName.product,
+    (table: Knex.CreateTableBuilder) => {
+      table.increments("_id").notNullable().primary();
+      table.string("name").notNullable();
+      table.integer("quantity_in_stock").notNullable();
+      table.integer("price").notNullable();
+      table.integer("vat");
+      table.integer("discount");
+      table.integer('distributor_id');
+      // createRef(table, TableName.Vendor);
+      createRef(table, TableName.productDetails);
+    }
+  );
+
   //ranking table
+  //TODO:rename to reviews table
   await knex.schema.createTable(
     TableName.Ranking,
     (table: Knex.CreateTableBuilder) => {
@@ -159,7 +162,10 @@ export async function up(knex: Knex): Promise<void> {
         "returned",
       ]);
       createRef(table, TableName.user);
-      table.dateTime("date_of_purhase").notNullable().defaultTo(new Date().toISOString());
+      table
+        .dateTime("date_of_purhase")
+        .notNullable()
+        .defaultTo(new Date().toISOString());
       table.dateTime("date_of_delivery").nullable();
       table.dateTime("return_date").nullable();
 

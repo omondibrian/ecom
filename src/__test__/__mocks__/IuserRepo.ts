@@ -1,6 +1,10 @@
 export default class UsersTestRepository
   implements UsersService.IUserRepository {
   constructor() {}
+  addNewVendor(input: UsersService.IVendorEntity): Promise<UsersService.IVendorModel> {
+    throw new Error("Method not implemented.");
+  }
+
   findUser(
     options: UsersService.validationFields
   ): Promise<UsersService.IUser> | any {

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Model } from "objection";
 import TableName from "../../../../constants/tableNames";
 import knex from "knex";

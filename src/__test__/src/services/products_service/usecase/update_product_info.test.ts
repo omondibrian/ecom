@@ -13,9 +13,9 @@ describe("UpdateProductInfo", () => {
           return {
             _id: "1",
             name: "updatedTestProduct",
-            price: "$15",
-            discount: "$3.0",
-            productPic: "/updatedPath",
+            price: "15",
+            discount: "3.0",
+            vat:8,
             distributor_id: "12",
             Qty: 12,
           };
@@ -31,18 +31,18 @@ describe("UpdateProductInfo", () => {
         _id: "1",
         updatedFields: {
           name: "updatedTestProduct",
-          price: "$15",
-          discount: "$3.0",
-          productPic: "/updatedPath",
+          price: "15",
+          discount: "3.0",
+         vat:8
         },
       });
 
       expect(updatedProduct).toStrictEqual({
         _id: "1",
         name: "updatedTestProduct",
-        price: "$15",
-        discount: "$3.0",
-        productPic: "/updatedPath",
+        price: "15",
+        discount: "3.0",
+        vat:8,
         distributor_id: "12",
         Qty: 12,
       });

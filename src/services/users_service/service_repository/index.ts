@@ -48,7 +48,7 @@ export default class UsersServiceRepository
   }
 
   private _formatVendorOutputEntity(user: Vendor): UsersService.IVendorModel {
-    let { address, _id, email, user_id, name, logo_url, description } = user;
+    let { address,  email, user_id, name, logo_url, description } = user;
     const {
       street_address_1,
       street_address_2,
@@ -160,7 +160,7 @@ export default class UsersServiceRepository
       },
       { relate: true }
     );
-    console.log(savedvendor);
+    // console.log(savedvendor);
     return this._formatVendorOutputEntity(savedvendor);
   }
 }

@@ -73,28 +73,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex(TableName.subCategory).insert(subCategory);
   const subCatId = await knex.select("*").from(TableName.subCategory);
 
-  const product = {
-    name: "testProduct",
-    quantity_in_stock: 12,
-    price: 12,
-    discount: 2.0,
-    Vendor_id: vendorRes[0]._id,
-    vat: 8,
-    category_id: catId[0]._id,
-    sub_category_id: subCatId[0]._id,
-  };
-  const prod2 = {
-    name: "testProduct2",
-    quantity_in_stock: 12,
-    price: 12,
-    discount: 2.0,
-    Vendor_id: vendorRes[0]._id,
-    vat: 8,
-    category_id: catId[0]._id,
-    sub_category_id: subCatId[0]._id,
-  };
-  await knex(TableName.product).insert([product, prod2]);
-  const ProdID = await knex.select("*").from(TableName.product);
+ 
 
   const prodDetails = {
     description: "test description",
@@ -104,11 +83,33 @@ export async function seed(knex: Knex): Promise<void> {
     rare_view_image_url: "/rare.jpg",
     left_view_image_url: "/left.jpg",
     right_view_image_url: "/right.jpg",
-    product_id: ProdID[0]._id,
+    category_id: catId[0]._id,
+    sub_category_id: subCatId[0]._id,
   };
   await knex(TableName.productDetails).insert(prodDetails);
-  await knex.select("*").from(TableName.productDetails);
-
+ const prodDeatailsId = await knex.select("_id").from(TableName.productDetails);
+ console.log(prodDeatailsId[0]);
+  const product = {
+    name: "testProduct",
+    quantity_in_stock: 12,
+    price: 12,
+    discount: 2.0,
+    distributor_id: vendorRes[0]._id,
+    vat: 8,
+    product_details_id:prodDeatailsId[0]._id
+  };
+  const prod2 = {
+    name: "testProduct2",
+    quantity_in_stock: 12,
+    price: 12,
+    discount: 2.0,
+    distributor_id: vendorRes[0]._id,
+    vat: 8,
+    product_details_id:prodDeatailsId[0]._id
+   
+  };
+  await knex(TableName.product).insert([product, prod2]);
+  const ProdID = await knex.select("*").from(TableName.product);
   const transcation = {
     user_id: user[0]._id,
     Amount: 50,
