@@ -10,9 +10,9 @@ const connectionConfig = knexConfig[environment];
 const connection = knex(connectionConfig);
 
 Model.knex(connection);
-export default class City extends Model {
+export default class AdditionalInfo extends Model {
   static get tableName(): string {
-    return TableName.city;
+    return TableName.address;
   }
   static get idColumn() {
     return '_id';

@@ -1,8 +1,10 @@
 /* istanbul ignore file */
-import { Model, RelationMapping } from "objection";
+import { Model } from "objection";
 import TableName from "../../../../constants/tableNames";
 import knex from "knex";
 import { con as knexConfig } from "../../../../constants/config";
+import Category from "./category.model";
+import AdditionalInfo from "./additionalInfo.model";
 
 const environment = process.env.NODE_ENV || "development";
 const connectionConfig = knexConfig[environment];
@@ -10,33 +12,30 @@ const connectionConfig = knexConfig[environment];
 const connection = knex(connectionConfig);
 
 Model.knex(connection);
-import Country from "./country.model";
-import City from "./city.model";
-
-export default class Address extends Model {
+export default class SubCategory extends Model {
   static get tableName(): string {
-    return TableName.address;
+    return TableName.subCategory;
   }
   static get idColumn() {
-    return '_id';
+    return "_id";
   }
+
   static relationMappings = {
-    country: {
+    category: {
+      modelClass: Category,
       relation: Model.BelongsToOneRelation,
-      modelClass: Country,
       join: {
-        from: `${TableName.address}.${TableName.country}_id`,
-        to: `${TableName.country}._id`,
+        from: `${TableName.subCategory}.${TableName.category}_id`,
+        to: `${TableName.category}._id`,
       },
-    }as RelationMapping<Country>,
-    city: {
+    },
+    additionalInfo: {
+      modelClass: AdditionalInfo,
       relation: Model.BelongsToOneRelation,
-      modelClass: City,
       join: {
-        from: `${TableName.address}.${TableName.city}_id`,
-        to: `${TableName.city}._id`,
+        from: `${TableName.subCategory}.${TableName.additionalInfo}_id`,
+        to: `${TableName.additionalInfo}._id`,
       },
     },
   };
 }
-

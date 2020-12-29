@@ -1,15 +1,13 @@
-import { IproductEntity } from "./../entity/productEntity";
-import { IProductRepository } from "../Repository/productsRepository";
 
 export class FetchProductUsecase {
-  constructor(private readonly repository: IProductRepository) {}
+  constructor(private readonly repository:ProductsService. IProductRepository) {}
 
   async find(identityParam: {
     _id?: string;
     name?: string;
-  }): Promise<IproductEntity> {
+  }): Promise<ProductsService.IproductEntity> {
     const { _id, name } = identityParam;
-    let product: IproductEntity;
+    let product: ProductsService.IproductEntity;
 
     if (_id === undefined && name === undefined) {
       throw new TypeError("no identity param passed");
@@ -23,7 +21,7 @@ export class FetchProductUsecase {
     return product;
   }
 
-  async fetchAllProducts(): Promise<IproductEntity[]> {
+  async fetchAllProducts(): Promise<ProductsService.IproductEntity[]> {
     const products = await this.repository.findAll();
     return products;
   }

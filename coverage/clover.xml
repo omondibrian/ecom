@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1609223113057" clover="3.2.0">
-  <project timestamp="1609223113058" name="All files">
-    <metrics statements="243" coveredstatements="243" conditionals="44" coveredconditionals="38" methods="52" coveredmethods="52" elements="339" coveredelements="333" complexity="0" loc="243" ncloc="243" packages="6" files="16" classes="16"/>
+<coverage generated="1609275352011" clover="3.2.0">
+  <project timestamp="1609275352012" name="All files">
+    <metrics statements="197" coveredstatements="197" conditionals="40" coveredconditionals="38" methods="49" coveredmethods="49" elements="286" coveredelements="284" complexity="0" loc="197" ncloc="197" packages="6" files="13" classes="13"/>
     <package name="constants">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="config.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/constants/config.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
       </file>
       <file name="tableNames.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/constants/tableNames.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
       </file>
     </package>
     <package name="services.orders_service.usecase">
@@ -51,76 +51,107 @@
         <line num="10" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="services.products_service.usecases">
-      <metrics statements="51" coveredstatements="51" conditionals="13" coveredconditionals="13" methods="14" coveredmethods="14"/>
-      <file name="add_product.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/add_product.ts">
-        <metrics statements="11" coveredstatements="11" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="9" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-      </file>
-      <file name="delete_product_usecase.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/delete_product_usecase.ts">
-        <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="13" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-      </file>
-      <file name="fetch_product_usecase.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/fetch_product_usecase.ts">
-        <metrics statements="18" coveredstatements="18" conditionals="9" coveredconditionals="9" methods="5" coveredmethods="5"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
-        <line num="14" count="3" type="cond" truecount="4" falsecount="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="18" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="22" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="32" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-      </file>
-      <file name="update_product_info.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/update_product_info.ts">
-        <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+    <package name="services.products_service.Repository">
+      <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="5" methods="9" coveredmethods="9"/>
+      <file name="productsRepository.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/Repository/productsRepository.ts">
+        <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="5" methods="9" coveredmethods="9"/>
+        <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="55" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="134" count="1" type="stmt"/>
+        <line num="138" count="1" type="stmt"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="158" count="1" type="stmt"/>
+        <line num="164" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="169" count="1" type="stmt"/>
+        <line num="170" count="1" type="stmt"/>
+        <line num="171" count="1" type="stmt"/>
+        <line num="172" count="1" type="stmt"/>
+        <line num="175" count="1" type="stmt"/>
+        <line num="188" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.products_service.usecases">
+      <metrics statements="42" coveredstatements="42" conditionals="13" coveredconditionals="13" methods="14" coveredmethods="14"/>
+      <file name="add_product.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/add_product.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+      <file name="delete_product_usecase.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/delete_product_usecase.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+      </file>
+      <file name="fetch_product_usecase.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/fetch_product_usecase.ts">
+        <metrics statements="18" coveredstatements="18" conditionals="9" coveredconditionals="9" methods="5" coveredmethods="5"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="17" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="21" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="24" count="4" type="stmt"/>
-        <line num="25" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="33" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
       </file>
+      <file name="update_product_info.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/products_service/usecases/update_product_info.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
     </package>
     <package name="services.users_service.service_repository">
-      <metrics statements="36" coveredstatements="36" conditionals="5" coveredconditionals="5" methods="7" coveredmethods="7"/>
+      <metrics statements="35" coveredstatements="35" conditionals="5" coveredconditionals="5" methods="7" coveredmethods="7"/>
       <file name="index.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/index.ts">
-        <metrics statements="36" coveredstatements="36" conditionals="5" coveredconditionals="5" methods="7" coveredmethods="7"/>
+        <metrics statements="35" coveredstatements="35" conditionals="5" coveredconditionals="5" methods="7" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -154,106 +185,20 @@
         <line num="142" count="1" type="stmt"/>
         <line num="145" count="1" type="stmt"/>
         <line num="146" count="1" type="stmt"/>
-        <line num="163" count="1" type="stmt"/>
         <line num="164" count="1" type="stmt"/>
         <line num="166" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="services.users_service.service_repository.models">
-      <metrics statements="75" coveredstatements="75" conditionals="10" coveredconditionals="5" methods="15" coveredmethods="15"/>
-      <file name="address.model.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/models/address.model.ts">
-        <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="81" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-      </file>
-      <file name="city.model.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/models/city.model.ts">
-        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="46" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-      </file>
-      <file name="country.model.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/models/country.model.ts">
-        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+    <package name="services.users_service.usecase">
+      <metrics statements="55" coveredstatements="55" conditionals="12" coveredconditionals="11" methods="12" coveredmethods="12"/>
+      <file name="addVendor.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/usecase/addVendor.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="15" count="46" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="3" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-      </file>
-      <file name="user.modal.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/models/user.modal.ts">
-        <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="40" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
       </file>
-      <file name="vendor.model.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/service_repository/models/vendor.model.ts">
-        <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="16" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="26" count="3" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="services.users_service.usecase">
-      <metrics statements="50" coveredstatements="50" conditionals="12" coveredconditionals="11" methods="9" coveredmethods="9"/>
       <file name="auth.ts" path="/home/brian/Desktop/coding_ground/projects/inprogress/ecom/src/services/users_service/usecase/auth.ts">
         <metrics statements="39" coveredstatements="39" conditionals="10" coveredconditionals="9" methods="5" coveredmethods="5"/>
         <line num="4" count="1" type="stmt"/>

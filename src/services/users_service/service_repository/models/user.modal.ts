@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import Knex = require("knex");
 import { Model, RelationMappings } from "objection";
 

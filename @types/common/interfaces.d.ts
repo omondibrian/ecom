@@ -25,22 +25,22 @@ declare namespace UsersService {
     password: string;
   }
   interface IVendorEntity {
-    _id?:number,
-    user_id:number,
-    name:string,
-    Address:IAddress,
-    logo_url:string,
-    email:string,
-    description:string
+    _id?: number;
+    user_id: number;
+    name: string;
+    Address: IAddress;
+    logo_url: string;
+    email: string;
+    description: string;
   }
   interface IVendorModel {
-    _id?:number,
-    user_id:number,
-    name:string,
-    Address:IAddress,
-    logo_url:string,
-    email:string,
-    description:string
+    _id?: number;
+    user_id: number;
+    name: string;
+    Address: IAddress;
+    logo_url: string;
+    email: string;
+    description: string;
   }
   type IAddress = {
     street_address_1: string;
@@ -96,5 +96,67 @@ declare namespace UsersService {
       options: validationFields;
       updateParam: IUpdateField;
     }) => Promise<UserEntity>;
+    addNewVendor(input: IVendorEntity): Promise<IVendorModel>;
+  }
+}
+
+declare namespace ProductsService {
+  interface IProductRepository {
+    findProduct(searchParam: string): Promise<IproductEntity>;
+    findAll(): Promise<IproductEntity[]>;
+    distributorProducts(distributorId: string): Promise<IproductEntity[]>;
+    addProduct(searchParam: IproductEntity): Promise<IproductEntity>;
+    updateProduct(payload: {
+      productId: string;
+      fields: IupdateParams;
+    }): Promise<IproductEntity>;
+    deleteProduct(
+      productId: string
+    ): Promise<{ deletedProduct: IproductEntity; deleted: boolean }>;
+  }
+  interface IupdateParams {
+    name?: string;
+    Qty?: number;
+    price?: string;
+    discount?: string;
+    distributor_id?: string;
+    vat?: number;
+    _id?: string;
+    productDetails?: {
+      id?:number;
+      description?: string;
+      dimensions?: string;
+      color?: string;
+      front_view_image_url?: string;
+      rare_view_image_url?: string;
+      left_view_image_url?: string;
+      right_view_image_url?: string;
+      category_id?: number;
+      sub_category_id?: number;
+    };
+  }
+
+  interface IproductEntity {
+    name: string;
+    Qty: number;
+    price: string;
+    discount: string;
+    distributor_id: string;
+    vat: number;
+    _id?: string;
+    productDetails?: ProductDetails;
+  }
+
+  interface ProductDetails {
+    _id?:number;
+    description: string;
+    dimensions: string;
+    color: string;
+    front_view_image_url: string;
+    rare_view_image_url: string;
+    left_view_image_url: string;
+    right_view_image_url: string;
+    category_id: number;
+    sub_category_id: number;
   }
 }

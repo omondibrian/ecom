@@ -160,7 +160,7 @@ export default class UsersServiceRepository
       },
       { relate: true }
     );
-    console.log(savedvendor);
+    // console.log(savedvendor);
     return this._formatVendorOutputEntity(savedvendor);
   }
 }

@@ -1,4 +1,3 @@
-import { IproductEntity } from "./../../../../../services/products_service/entity/productEntity";
 import { FetchProductUsecase } from "../../../../../services/products_service/usecases/fetch_product_usecase";
 import { ProductsTestRepository } from "../../../../__mocks__/productsRepo";
 
@@ -6,13 +5,13 @@ const testRepo = new ProductsTestRepository();
 const fetchProductUsecase = new FetchProductUsecase(testRepo);
 
 describe("FetchProductUsecase", () => {
-  const product: IproductEntity = {
+  const product: ProductsService.IproductEntity = {
     name: "testProduct",
     Qty: 12,
     price: "$12",
     discount: "$2.0",
     distributor_id: "12",
-    productPic: "/picture",
+    vat:8,
     _id: "1",
   };
   describe("FetchProductUsecase.fetch", () => {
@@ -60,7 +59,7 @@ describe("FetchProductUsecase", () => {
     });
     it("should fetch all available products", async () => {
       const result = await fetchProductUsecase.fetchAllProducts();
-      expect(result).toStrictEqual<Array<IproductEntity>>([product, product]);
+      expect(result).toStrictEqual<Array<ProductsService.IproductEntity>>([product, product]);
       expect(testRepo.findAll).toHaveBeenCalled();
     });
   });
@@ -84,7 +83,7 @@ describe("FetchProductUsecase", () => {
       const result = await fetchProductUsecase.distributorProducts(
         distributorID
       );
-      expect(result).toStrictEqual<Array<IproductEntity>>([product, product]);
+      expect(result).toStrictEqual<Array<ProductsService.IproductEntity>>([product, product]);
       expect(testRepo.distributorProducts).toHaveBeenCalled();
     });
   });

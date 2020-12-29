@@ -1,11 +1,9 @@
-import { IproductEntity } from "../entity/productEntity";
-import { IProductRepository } from "../Repository/productsRepository";
 
 export class AddProductUsecase {
-  constructor(private readonly repository: IProductRepository) {}
-  async add(product: IproductEntity): Promise<IproductEntity> {
+  constructor(private readonly repository:ProductsService.IProductRepository) {}
+  async add(product: ProductsService.IproductEntity): Promise<ProductsService.IproductEntity> {
     const existingProduct = await this.repository.findProduct(product.name);
-    let result: IproductEntity;
+    let result: ProductsService.IproductEntity;
     if (!existingProduct) {
       result = await this.repository.addProduct(product);
       return result;
@@ -13,7 +11,7 @@ export class AddProductUsecase {
     const { _id, Qty } = existingProduct;
     result = await this.repository.updateProduct({
       productId: _id,
-      fields: [{ key: "Qty", value: `${Qty + product.Qty}` }],
+      fields: {...existingProduct,Qty:Qty + product.Qty},
     });
     return result;
   }

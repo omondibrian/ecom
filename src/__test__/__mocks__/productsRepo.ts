@@ -1,30 +1,35 @@
-import { IproductEntity } from "../../services/products_service/entity/productEntity";
-import { IProductRepository } from "../../services/products_service/Repository/productsRepository";
-
-export class ProductsTestRepository implements IProductRepository {
-  distributorProducts(distributorId: string): Promise<IproductEntity[]> {
+export class ProductsTestRepository
+  implements ProductsService.IProductRepository {
+  distributorProducts(
+    distributorId: string
+  ): Promise<ProductsService.IproductEntity[]> {
     throw new Error("Method not implemented.");
   }
   deleteProduct(
     productId: string
-  ): Promise<{ deletedProduct: IproductEntity; deleted: boolean }> {
+  ): Promise<{
+    deletedProduct: ProductsService.IproductEntity;
+    deleted: boolean;
+  }> {
     throw new Error("Method not implemented.");
   }
   updateProduct(payload: {
     productId: string;
-    fields: { key: string; value: string }[];
-  }): Promise<IproductEntity> {
+    fields:ProductsService.IupdateParams;
+  }): Promise<ProductsService.IproductEntity> {
     throw new Error("Method not implemented.");
   }
-  findAll(): Promise<IproductEntity[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  addProduct(searchParam: IproductEntity): Promise<IproductEntity> {
+  findAll(): Promise<ProductsService.IproductEntity[]> {
     throw new Error("Method not implemented.");
   }
 
-  findProduct(searchParam: string): Promise<IproductEntity> {
+  addProduct(
+    searchParam: ProductsService.IproductEntity
+  ): Promise<ProductsService.IproductEntity> {
+    throw new Error("Method not implemented.");
+  }
+
+  findProduct(searchParam: string): Promise<ProductsService.IproductEntity> {
     return null;
   }
 }
