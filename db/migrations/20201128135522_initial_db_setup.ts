@@ -23,6 +23,7 @@ export async function up(knex: Knex): Promise<void> {
         addDefaultColumns(table);
       }
     ), //Address table
+    //TODO: should add the users/vendors id field relation 
     await knex.schema.createTable(
       TableName.address,
       (table: Knex.CreateTableBuilder) => {

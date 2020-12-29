@@ -4,9 +4,9 @@ import User from "../../../../../services/users_service/service_repository/model
 const repository = new UsersServiceRepository();
 
 describe("UsersServiceRepository", () => {
-  afterAll(()=>{
-    User.knex().destroy()
-  })
+  afterAll(() => {
+    User.knex().destroy();
+  });
   const newUser: UsersService.IUserModel = {
     name: "testUser",
     _id: 1,
@@ -93,11 +93,36 @@ describe("UsersServiceRepository", () => {
         value: "./updatedPic.jpg",
       };
       const updates = await repository.UpdateUserField({
-        options: { email : updatedUser.email ,_id:'1'},
+        options: { email: updatedUser.email, _id: "1" },
         updateParam: updateParams,
       });
       expect(updates).toStrictEqual<UsersService.UserEntity>(updatedUser);
     });
   });
 
+  describe("UsersServiceRepository.addNewVendor()", () => {
+    //new vendor object
+    const Vendor: UsersService.IVendorEntity = {
+      user_id: 1,
+      name: "TestVendor",
+      Address: {
+        street_address_1: "testStreet",
+        street_address_2: null,
+        P_O_BOX: "536-20115 TestArea",
+        city: {
+          name: "Nairobi",
+        },
+        country: {
+          name: "Kenya",
+        },
+      },
+      logo_url: "/logo.jpg",
+      email: "testVendor.co.ke",
+      description: "testVendor we deel in test Products",
+    };
+    it("should sucessfully add a new vendor", async () => {
+      const newVendor = await repository.addNewVendor(Vendor);
+      expect(newVendor).toStrictEqual<UsersService.IVendorModel>(Vendor);
+    });
+  });
 });

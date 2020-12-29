@@ -1,5 +1,6 @@
 import TableName from "../../../constants/tableNames";
 import User from "./models/user.modal";
+import Vendor from "./models/vendor.model";
 
 export default class UsersServiceRepository
   implements UsersService.IUserRepository {
@@ -46,6 +47,32 @@ export default class UsersServiceRepository
     return displayId ? withId : noId;
   }
 
+  private _formatVendorOutputEntity(user: Vendor): UsersService.IVendorModel {
+    let { address, _id, email, user_id, name, logo_url, description } = user;
+    const {
+      street_address_1,
+      street_address_2,
+      P_O_BOX,
+      country,
+      city,
+    } = address;
+    const withId = {
+      user_id,
+      Address: {
+        street_address_1,
+        street_address_2,
+        P_O_BOX,
+        country: { name: country.name },
+        city: { name: city.name },
+      },
+      email,
+      name,
+      logo_url,
+      description,
+    };
+
+    return withId;
+  }
   async findUser(
     options: UsersService.validationFields
   ): Promise<UsersService.IUserModel> {
@@ -110,5 +137,30 @@ export default class UsersServiceRepository
       enableStr: true,
       displayId: true,
     });
+  }
+
+  async addNewVendor(
+    inputVendor: UsersService.IVendorEntity
+  ): Promise<UsersService.IVendorModel> {
+    let { user_id, name, email, Address, logo_url, description } = inputVendor;
+    const savedvendor = await Vendor.query().insertGraphAndFetch(
+      {
+        name,
+        email,
+        user_id,
+        description,
+        logo_url,
+        [TableName.address]: {
+          street_address_1: Address.street_address_1,
+          street_address_2: Address.street_address_2,
+          P_O_BOX: Address.P_O_BOX,
+          city: Address.city,
+          country: Address.country,
+        },
+      },
+      { relate: true }
+    );
+    console.log(savedvendor);
+    return this._formatVendorOutputEntity(savedvendor);
   }
 }

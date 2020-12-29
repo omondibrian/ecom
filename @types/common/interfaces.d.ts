@@ -24,6 +24,24 @@ declare namespace UsersService {
     phoneNumber?: string;
     password: string;
   }
+  interface IVendorEntity {
+    _id?:number,
+    user_id:number,
+    name:string,
+    Address:IAddress,
+    logo_url:string,
+    email:string,
+    description:string
+  }
+  interface IVendorModel {
+    _id?:number,
+    user_id:number,
+    name:string,
+    Address:IAddress,
+    logo_url:string,
+    email:string,
+    description:string
+  }
   type IAddress = {
     street_address_1: string;
     street_address_2?: string;
