@@ -1,5 +1,9 @@
 node_modules
 .github/workflows/workflow.yml
-./coverage/
+
 .env
 .coveralls.yml
+
+# Ignore test-related files
+/coverage.data
+/coverage/

@@ -123,7 +123,7 @@ declare namespace ProductsService {
     vat?: number;
     _id?: string;
     productDetails?: {
-      id?:number;
+      id?: number;
       description?: string;
       dimensions?: string;
       color?: string;
@@ -148,7 +148,7 @@ declare namespace ProductsService {
   }
 
   interface ProductDetails {
-    _id?:number;
+    _id?: number;
     description: string;
     dimensions: string;
     color: string;
@@ -159,4 +159,39 @@ declare namespace ProductsService {
     category_id: number;
     sub_category_id: number;
   }
+}
+
+declare namespace OrderService {
+  interface OrderEntity {
+    _id: string;
+    cust_id: string;
+    productsList: {
+      _id: string;
+      name: string;
+      price: string;
+      discount: string;
+      vat:number;
+      distributor_id: string;
+      QtyToBeBought: number;
+    }[];
+  }
+
+  interface Receipt extends OrderEntity {
+    name: string;
+  }
+  interface IOrdersRepository {
+    //to throw an error if update is not succesfull
+    updateProductQty(
+      payload: { productId: string; Qty: number }[]
+    ): Promise<boolean>;
+    //fixme:update the paymentDetails structure
+    authenticatePayments(
+      order: OrderEntity
+    ): Promise<{ isPayed: boolean; PaymentDetails: any }>;
+    getCustName(id: string): Promise<string>;
+    genOrder(order: OrderEntity): Promise<OrderEntity>;
+    getOrders(distributorId:string): Promise<OrderEntity[]>
+  }
+  
+
 }

@@ -1,14 +1,8 @@
-import {
-  OrderEntity,
-  Receipt,
-} from "../../services/orders_service/entity/orderEntity";
-import { IOrdersRepository } from "../../services/orders_service/repository/ordersRepository";
-
-export class OrdersRepository implements IOrdersRepository {
-  getOrders(distributorId: string): Promise<OrderEntity[]> {
+export class OrdersRepository implements OrderService.IOrdersRepository {
+  getOrders(distributorId: string): Promise<OrderService.OrderEntity[]> {
     throw new Error("Method not implemented.");
   }
-  genOrder(order: OrderEntity): Promise<OrderEntity> {
+  genOrder(order: OrderService.OrderEntity): Promise<OrderService.OrderEntity> {
     throw new Error("Method not implemented.");
   }
 
@@ -16,7 +10,7 @@ export class OrdersRepository implements IOrdersRepository {
     throw new Error("Method not implemented.");
   }
   authenticatePayments(
-    order: OrderEntity
+    order: OrderService.OrderEntity
   ): Promise<{ isPayed: boolean; PaymentDetails: any }> {
     throw new Error("Method not implemented.");
   }
