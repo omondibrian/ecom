@@ -28,7 +28,7 @@ export class CreateOrderUsecase {
 
   private genPayload(
     productArr: {
-      _id: string;
+      _id?: string;
       name: string;
       price: string;
       discount: string;

@@ -118,7 +118,7 @@ export async function seed(knex: Knex): Promise<void> {
   const tranID = await knex.select("*").from(TableName.Transcation);
 
   const order = {
-    user_id: user[0]._id,
+    cust_id: user[0]._id,
     status: "inprogress",
     transcation_id: tranID[0]._id,
   };
@@ -129,10 +129,12 @@ export async function seed(knex: Knex): Promise<void> {
     {
       order_id: orderID[0]._id,
       product_id: ProdID[0]._id,
+      QtyToBeBought:1
     },
     {
       order_id: orderID[0]._id,
       product_id: ProdID[1]._id,
+      QtyToBeBought:2
     },
   ];
   await knex(TableName.orderedProducts).insert(orderedProducts);

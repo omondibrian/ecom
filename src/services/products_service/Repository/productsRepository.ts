@@ -3,6 +3,32 @@ import Product from "./models/products.model";
 import ProductDetails from "./models/product_details.model";
 
 export class ProductsRepository implements ProductsService.IProductRepository {
+  async updateProductQty(params: {
+    _id: number;
+    qty: number;
+  }): Promise<ProductsService.IproductEntity> {
+    let product: Product;
+    while (!product) {
+      product = await Product.query().findById(params._id);
+      
+    }
+    if (product.quantity_in_stock ) {
+      
+      const updateQty = product.quantity_in_stock - params.qty;
+      const result = await Product.query().updateAndFetchById(params._id, {
+        quantity_in_stock: updateQty,
+      });
+      
+      return {
+        name:result.name,
+        vat:result.vat,
+        Qty: result.quantity_in_stock,
+        price: result.price + "",
+        discount: result.discount + "",
+        distributor_id: result.distributor_id + "",
+      };
+    }
+  }
   async findProduct(
     searchParam: string
   ): Promise<ProductsService.IproductEntity> {
@@ -11,6 +37,7 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         [TableName.productDetails]: true,
       })
       .where({ _id: searchParam });
+      
     return {
       Qty: product[0].quantity_in_stock,
       discount: product[0].discount + "",
@@ -18,16 +45,16 @@ export class ProductsRepository implements ProductsService.IProductRepository {
       name: product[0].name,
       price: product[0].price + "",
       vat: product[0].vat,
-      productDetails: { 
-        category_id :product[0].product_details.category_id, 
-        sub_category_id:product[0].product_details.sub_category_id,
-        color:product[0].product_details.color,
-        right_view_image_url:product[0].product_details.right_view_image_url,
-        rare_view_image_url:product[0].product_details.rare_view_image_url,
-        left_view_image_url:product[0].product_details.left_view_image_url,
-        front_view_image_url:product[0].product_details.front_view_image_url,
-        description:product[0].product_details.description,
-        dimensions:product[0].product_details.dimensions,
+      productDetails: {
+        category_id: product[0].product_details.category_id,
+        sub_category_id: product[0].product_details.sub_category_id,
+        color: product[0].product_details.color,
+        right_view_image_url: product[0].product_details.right_view_image_url,
+        rare_view_image_url: product[0].product_details.rare_view_image_url,
+        left_view_image_url: product[0].product_details.left_view_image_url,
+        front_view_image_url: product[0].product_details.front_view_image_url,
+        description: product[0].product_details.description,
+        dimensions: product[0].product_details.dimensions,
       },
     };
   }

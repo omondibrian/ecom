@@ -110,6 +110,10 @@ declare namespace ProductsService {
       productId: string;
       fields: IupdateParams;
     }): Promise<IproductEntity>;
+    updateProductQty(params: {
+      _id: number;
+      qty: number;
+    }): Promise<IproductEntity>;
     deleteProduct(
       productId: string
     ): Promise<{ deletedProduct: IproductEntity; deleted: boolean }>;
@@ -163,14 +167,14 @@ declare namespace ProductsService {
 
 declare namespace OrderService {
   interface OrderEntity {
-    _id: string;
+    _id?: string;
     cust_id: string;
     productsList: {
-      _id: string;
+      _id?: string;
       name: string;
       price: string;
       discount: string;
-      vat:number;
+      vat: number;
       distributor_id: string;
       QtyToBeBought: number;
     }[];
@@ -190,8 +194,6 @@ declare namespace OrderService {
     ): Promise<{ isPayed: boolean; PaymentDetails: any }>;
     getCustName(id: string): Promise<string>;
     genOrder(order: OrderEntity): Promise<OrderEntity>;
-    getOrders(distributorId:string): Promise<OrderEntity[]>
+    getOrders(distributorId: string): Promise<OrderEntity[]>;
   }
-  
-
 }
