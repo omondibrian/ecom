@@ -48,7 +48,7 @@ export default class UsersServiceRepository
   }
 
   private _formatVendorOutputEntity(user: Vendor): UsersService.IVendorModel {
-    let { address,  email, user_id, name, logo_url, description } = user;
+    let { address, email, user_id, name, logo_url, description } = user;
     const {
       street_address_1,
       street_address_2,
@@ -76,15 +76,29 @@ export default class UsersServiceRepository
   async findUser(
     options: UsersService.validationFields
   ): Promise<UsersService.IUserModel> {
-    const user = await User.query()
-      .withGraphJoined({
-        [TableName.address]: true,
-        [TableName.address]: {
-          city: true,
-          country: true,
-        },
-      })
-      .where(options);
+    let user: User[];
+    if (options._id) {
+      const userId = await User.query().findById(options._id);
+      user = await User.query()
+        .withGraphJoined({
+          [TableName.address]: true,
+          [TableName.address]: {
+            city: true,
+            country: true,
+          },
+        })
+        .where({ email: userId.email });
+    } else {
+      user = await User.query()
+        .withGraphJoined({
+          [TableName.address]: true,
+          [TableName.address]: {
+            city: true,
+            country: true,
+          },
+        })
+        .where(options);
+    }
     const enableStr = false;
     return {
       ...this._formatUserOutputEntity(user[0], { enableStr, displayId: true }),

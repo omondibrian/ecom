@@ -1,6 +1,4 @@
-import { OrderEntity } from "../../services/orders_service/entity/orderEntity";
-
-export const ordersList: OrderEntity[] = [
+export const ordersList: OrderService.OrderEntity[] = [
   {
     _id: "023",
     cust_id: "24",
@@ -8,19 +6,19 @@ export const ordersList: OrderEntity[] = [
       {
         _id: "1",
         name: "OrderedTestProduct",
-        price: "$15",
-        discount: "$3.0",
-        productPic: "/updatedPath",
-        distributor_id: "12",
+        price: "15",
+        discount: "3.0",
+        vat: 8.0,
+        distributor_id: "1",
         QtyToBeBought: 1,
       },
       {
         _id: "2",
         name: "OrderedTestProduct",
-        price: "$15",
-        discount: "$3.0",
-        productPic: "/updatedPath",
-        distributor_id: "12",
+        price: "15",
+        discount: "3.0",
+        vat: 8.0,
+        distributor_id: "1",
         QtyToBeBought: 2,
       },
     ],
@@ -32,18 +30,18 @@ export const ordersList: OrderEntity[] = [
       {
         _id: "3",
         name: "OrderedTestProduct",
-        price: "$15",
-        discount: "$3.0",
-        productPic: "/updatedPath",
+        price: "15",
+        discount: "3.0",
+        vat: 8.0,
         distributor_id: "12",
         QtyToBeBought: 1,
       },
       {
         _id: "4",
         name: "OrderedTestProduct",
-        price: "$15",
-        discount: "$3.0",
-        productPic: "/updatedPath",
+        price: "15",
+        discount: "3.0",
+        vat: 8.0,
         distributor_id: "12",
         QtyToBeBought: 2,
       },

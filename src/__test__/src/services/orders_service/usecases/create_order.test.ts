@@ -1,7 +1,3 @@
-import {
-  OrderEntity,
-  Receipt,
-} from "../../../../../services/orders_service/entity/orderEntity";
 import { CreateOrderUsecase } from "../../../../../services/orders_service/usecase/create_order";
 import { OrdersRepository } from "../../../../__mocks__/ordersRepo";
 
@@ -9,7 +5,7 @@ const testRepo = new OrdersRepository();
 const createOrder = new CreateOrderUsecase(testRepo);
 describe("CreateOrderUsecase", () => {
   describe("CreateOrderUsecase.order", () => {
-    const order: OrderEntity = {
+    const order: OrderService.OrderEntity = {
       _id: "023",
       cust_id: "24",
       productsList: [
@@ -18,16 +14,16 @@ describe("CreateOrderUsecase", () => {
           name: "OrderedTestProduct",
           price: "$15",
           discount: "$3.0",
-          productPic: "/updatedPath",
           distributor_id: "12",
           QtyToBeBought: 1,
+          vat: 8.0,
         },
         {
           _id: "2",
           name: "OrderedTestProduct",
-          price: "$15",
-          discount: "$3.0",
-          productPic: "/updatedPath",
+          price: "15",
+          discount: "3.0",
+          vat: 8.0,
           distributor_id: "2",
           QtyToBeBought: 2,
         },
@@ -85,7 +81,7 @@ describe("CreateOrderUsecase", () => {
 
     it("should succesfully create a new Order", async () => {
       const result = await createOrder.order(order);
-      expect(result).toStrictEqual<Receipt>({
+      expect(result).toStrictEqual<OrderService.Receipt>({
         ...order,
         name: "testCustomer",
       });

@@ -1,5 +1,8 @@
 export class ProductsTestRepository
   implements ProductsService.IProductRepository {
+  updateProductQty(params: { _id: number; qty: number; }): Promise<ProductsService.IproductEntity> {
+    throw new Error("Method not implemented.");
+  }
   distributorProducts(
     distributorId: string
   ): Promise<ProductsService.IproductEntity[]> {

@@ -147,7 +147,8 @@ export async function up(knex: Knex): Promise<void> {
     (table: Knex.CreateTableBuilder) => {
       table.increments("_id").notNullable().primary();
       table.integer("Amount").notNullable();
-      createRef(table, TableName.user);
+      table.integer(`${TableName.user}_id`).notNullable();
+      
     }
   );
   //order table
@@ -161,7 +162,8 @@ export async function up(knex: Knex): Promise<void> {
         "delivered",
         "returned",
       ]);
-      createRef(table, TableName.user);
+      table.integer('cust_id');
+      // createRef(table, TableName.user);
       table
         .dateTime("date_of_purhase")
         .notNullable()
@@ -177,7 +179,8 @@ export async function up(knex: Knex): Promise<void> {
     TableName.orderedProducts,
     (table: Knex.CreateTableBuilder) => {
       table.increments("_id").notNullable().primary();
-      createRef(table, TableName.product);
+      table.integer(`${TableName.product}_id`);
+      table.integer('QtyToBeBought')
       createRef(table, TableName.order);
     }
   );

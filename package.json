@@ -26,7 +26,8 @@
     "nyc": "^15.1.0",
     "objection": "^2.2.3",
     "pg": "^8.3.0",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "stripe": "^8.129.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",

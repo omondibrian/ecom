@@ -1,10 +1,8 @@
-import { OrderEntity, Receipt } from "../entity/orderEntity";
-import { IOrdersRepository } from "../repository/ordersRepository";
 
 export class CreateOrderUsecase {
-  constructor(private readonly repository: IOrdersRepository) {}
+  constructor(private readonly repository: OrderService.IOrdersRepository) {}
 
-  async order(order: OrderEntity): Promise<Receipt> {
+  async order(order: OrderService.OrderEntity): Promise<OrderService.Receipt> {
     const isAuthorisedPayment = await this.repository.authenticatePayments(
       order
     );
@@ -14,13 +12,13 @@ export class CreateOrderUsecase {
         productArr
       );
       await this.repository.updateProductQty(payload);
-      //todo:check if delevry address is set
+      //TODO:check if delevry address is set
       const [cust_name, result] = await Promise.all([
         this.repository.getCustName(order.cust_id),
         this.repository.genOrder(order),
       ]);
 
-      const receipt: Receipt = {
+      const receipt:OrderService.Receipt = {
         ...result,
         name: cust_name,
       };
@@ -30,11 +28,11 @@ export class CreateOrderUsecase {
 
   private genPayload(
     productArr: {
-      _id: string;
+      _id?: string;
       name: string;
       price: string;
       discount: string;
-      productPic: string;
+      vat:number;
       distributor_id: string;
       QtyToBeBought: number;
     }[]

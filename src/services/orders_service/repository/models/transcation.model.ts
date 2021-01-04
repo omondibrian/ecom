@@ -3,7 +3,7 @@ import { Model, RelationMappings } from "objection";
 import TableName from "../../../../constants/tableNames";
 import knex from "knex";
 import { con as knexConfig } from "../../../../constants/config";
-import ProductDetails from "./product_details.model";
+import User from "../../../users_service/service_repository/models/user.modal";
 
 const environment = process.env.NODE_ENV || "development";
 const connectionConfig = knexConfig[environment];
@@ -11,33 +11,25 @@ const connectionConfig = knexConfig[environment];
 const connection = knex(connectionConfig);
 
 Model.knex(connection);
-export default class Product extends Model {
-  id?:number;
-  name: string;
-  _id?:number;
-  quantity_in_stock:number;
-  price: number;
-  discount: number;
-  distributor_id: number;
-  vat: number;
-  productPic: string;
-  productDetails?: ProductsService.ProductDetails;
-  product_details?: ProductsService.ProductDetails;
+export default class Transcation extends Model {
+  product_id: number;
+  user_id:number;
+  Amount:number;
+  _id: number;
   static get tableName(): string {
-    return TableName.product;
+    return TableName.Transcation;
   }
   static get idColumn() {
     return "_id";
   }
 
   static relationMappings: RelationMappings = {
- 
-    [TableName.productDetails]: {
-      modelClass: ProductDetails,
+    [TableName.user]: {
+      modelClass: User,
       relation: Model.BelongsToOneRelation,
       join: {
-        from: `${TableName.product}.${TableName.productDetails}_id`,
-        to: `${TableName.productDetails}._id`,
+        from: `${TableName.Transcation}.${TableName.user}_id`,
+        to: `${TableName.user}._id`,
       },
     },
   };
