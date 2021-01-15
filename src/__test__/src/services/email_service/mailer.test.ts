@@ -5,7 +5,7 @@ describe("Mailer", () => {
   describe("Mailer.sendemail()", () => {
     it("should successfully send email to the reciepient  email address", async () => {
       const res = await mailer.sendemail(
-        "test@gmail.com",
+        "omondibrian392@gmail.com",
         "omondibrian392@gmail.com",
         "testing",
         "test test test"
