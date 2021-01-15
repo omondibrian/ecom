@@ -1,3 +1,4 @@
+import { MaybeCompositeId } from "objection";
 import Product from "../../products_service/Repository/models/products.model";
 import Order from "./models/order.model";
 import OrderedProduct from "./models/orderedProducts.model";
@@ -73,7 +74,7 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
       const product = productsList[i];
       products[i] = {
         QtyToBeBought: product.QtyToBeBought,
-        product_id: parseInt(product._id),
+        product_id: parseInt(product._id as string),
         order_id: parseInt(savedOrder._id),
       };
     }
@@ -81,7 +82,7 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
     const ordProdId = await OrderedProduct.query().insert(products);
     console.log(ordProdId);
     const orderedProdDetails = ordProdId.map((prod) => {
-      return this.productRepo.findProduct(ordProdId[0]._id);
+      return this.productRepo.findProduct(prod._id);
     });
     const prodDetails = await Promise.all(orderedProdDetails);
     let list: {
@@ -188,12 +189,17 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
       .where({ distributor_id: distributorId });
     for (let i = 0; i < prods.length; i++) {
       const prod = prods[i];
-      const orderedProduct = await OrderedProduct.query().findById(prod._id);
+      let orderedProduct: OrderedProduct;
+      if (prod.id !== undefined) {
+        orderedProduct = await OrderedProduct.query().findById(
+          prod._id as MaybeCompositeId
+        );
+        if (orderedProduct.name === "undefined") continue;
+        orderedProd = [...orderedProd, orderedProduct];
+      }
       // const orderedProduct = await OrderedProduct.query()
       //   .select("*")
       //   .where({ _id: prod._id });
-      if (orderedProduct.name === "undefined") continue;
-      orderedProd = [...orderedProd, orderedProduct];
     }
     return orderedProd;
   }

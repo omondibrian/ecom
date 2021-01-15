@@ -7,27 +7,29 @@ export class ProductsRepository implements ProductsService.IProductRepository {
     _id: number;
     qty: number;
   }): Promise<ProductsService.IproductEntity> {
-    let product: Product;
-    while (!product) {
-      product = await Product.query().findById(params._id);
-      
+    let product: Product | undefined;
+    let result: Product | undefined;
+    if (product !== undefined) {
+      while (!product) {
+        product = await Product.query().findById(params._id);
+      }
+      if (product.quantity_in_stock) {
+        const updateQty = product.quantity_in_stock - params.qty;
+        result = await Product.query().updateAndFetchById(params._id, {
+          quantity_in_stock: updateQty,
+        });
+      }
     }
-    if (product.quantity_in_stock ) {
-      
-      const updateQty = product.quantity_in_stock - params.qty;
-      const result = await Product.query().updateAndFetchById(params._id, {
-        quantity_in_stock: updateQty,
-      });
-      
-      return {
-        name:result.name,
-        vat:result.vat,
-        Qty: result.quantity_in_stock,
-        price: result.price + "",
-        discount: result.discount + "",
-        distributor_id: result.distributor_id + "",
-      };
-    }
+    if (!result) throw new Error("cannot read property result of undefined");
+
+    return {
+      name: result.name,
+      vat: result.vat,
+      Qty: result.quantity_in_stock,
+      price: result.price + "",
+      discount: result.discount + "",
+      distributor_id: result.distributor_id + "",
+    };
   }
   async findProduct(
     searchParam: string
@@ -37,7 +39,7 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         [TableName.productDetails]: true,
       })
       .where({ _id: searchParam });
-      
+
     return {
       Qty: product[0].quantity_in_stock,
       discount: product[0].discount + "",
@@ -46,15 +48,15 @@ export class ProductsRepository implements ProductsService.IProductRepository {
       price: product[0].price + "",
       vat: product[0].vat,
       productDetails: {
-        category_id: product[0].product_details.category_id,
-        sub_category_id: product[0].product_details.sub_category_id,
-        color: product[0].product_details.color,
-        right_view_image_url: product[0].product_details.right_view_image_url,
-        rare_view_image_url: product[0].product_details.rare_view_image_url,
-        left_view_image_url: product[0].product_details.left_view_image_url,
-        front_view_image_url: product[0].product_details.front_view_image_url,
-        description: product[0].product_details.description,
-        dimensions: product[0].product_details.dimensions,
+        category_id: product[0].product_details!.category_id,
+        sub_category_id: product[0].product_details!.sub_category_id,
+        color: product[0].product_details!.color,
+        right_view_image_url: product[0].product_details!.right_view_image_url,
+        rare_view_image_url: product[0].product_details!.rare_view_image_url,
+        left_view_image_url: product[0].product_details!.left_view_image_url,
+        front_view_image_url: product[0].product_details!.front_view_image_url,
+        description: product[0].product_details!.description,
+        dimensions: product[0].product_details!.dimensions,
       },
     };
   }
@@ -73,7 +75,7 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         productDetails: { ...product.product_details },
       };
     });
-    return result;
+    return result as ProductsService.IproductEntity[];
   }
   async distributorProducts(
     distributorId: string
@@ -94,7 +96,7 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         productDetails: { ...product.product_details },
       };
     });
-    return result;
+    return result as ProductsService.IproductEntity[];
   }
   async addProduct(
     searchParam: ProductsService.IproductEntity
@@ -126,17 +128,7 @@ export class ProductsRepository implements ProductsService.IProductRepository {
       { relate: [TableName.Vendor] }
     );
     // console.log(product);
-    const {
-      category_id,
-      sub_category_id,
-      color,
-      right_view_image_url,
-      rare_view_image_url,
-      left_view_image_url,
-      front_view_image_url,
-      description,
-      dimensions,
-    } = product.product_details;
+
     return {
       Qty: product.quantity_in_stock,
       discount: `${product.discount}`,
@@ -145,15 +137,15 @@ export class ProductsRepository implements ProductsService.IProductRepository {
       price: `${product.price}`,
       vat: product.vat,
       productDetails: {
-        category_id,
-        sub_category_id,
-        color,
-        right_view_image_url,
-        rare_view_image_url,
-        left_view_image_url,
-        front_view_image_url,
-        description,
-        dimensions,
+        category_id: product.product_details!.category_id,
+        sub_category_id: product.product_details!.sub_category_id,
+        color: product.product_details!.color,
+        right_view_image_url: product.product_details!.right_view_image_url,
+        rare_view_image_url: product.product_details!.rare_view_image_url,
+        left_view_image_url: product.product_details!.left_view_image_url,
+        front_view_image_url: product.product_details!.front_view_image_url,
+        description: product.product_details!.description,
+        dimensions: product.product_details!.dimensions,
       },
     };
   }
@@ -165,8 +157,8 @@ export class ProductsRepository implements ProductsService.IProductRepository {
     const result = await Product.query()
       .updateAndFetchById(parseInt(payload.productId), {
         quantity_in_stock: Qty,
-        price: parseFloat(price),
-        discount: parseFloat(discount),
+        price: parseFloat(price as string),
+        discount: parseFloat(discount as string),
         vat,
       })
       .withGraphFetched({ [TableName.productDetails]: true });
@@ -178,7 +170,17 @@ export class ProductsRepository implements ProductsService.IProductRepository {
       discount: result.discount + "",
       vat: result.vat,
       distributor_id: result.distributor_id + "",
-      productDetails: { ...result.product_details },
+      productDetails: {
+        category_id: result.product_details!.category_id,
+        sub_category_id: result.product_details!.sub_category_id,
+        color: result.product_details!.color,
+        right_view_image_url: result.product_details!.right_view_image_url,
+        rare_view_image_url: result.product_details!.rare_view_image_url,
+        left_view_image_url: result.product_details!.left_view_image_url,
+        front_view_image_url: result.product_details!.front_view_image_url,
+        description: result.product_details!.description,
+        dimensions: result.product_details!.dimensions,
+      },
     };
   }
   async deleteProduct(
@@ -192,10 +194,10 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         [TableName.productDetails]: true,
       })
       .where({ _id: productId });
-    const PID = deletedProduct[0].product_details._id;
+    const PID = deletedProduct[0]!.product_details!._id;
     Promise.all([
       await Product.query().deleteById(productId),
-      await ProductDetails.query().deleteById(PID),
+      await ProductDetails.query().deleteById(PID as number),
     ]);
 
     return {
@@ -206,7 +208,21 @@ export class ProductsRepository implements ProductsService.IProductRepository {
         name: deletedProduct[0].name,
         price: deletedProduct[0].price + "",
         vat: deletedProduct[0].vat,
-        productDetails: { ...deletedProduct[0].product_details },
+        productDetails: {
+          category_id: deletedProduct[0].product_details!.category_id,
+          sub_category_id: deletedProduct[0].product_details!.sub_category_id,
+          color: deletedProduct[0].product_details!.color,
+          right_view_image_url: deletedProduct[0].product_details!
+            .right_view_image_url,
+          rare_view_image_url: deletedProduct[0].product_details!
+            .rare_view_image_url,
+          left_view_image_url: deletedProduct[0].product_details!
+            .left_view_image_url,
+          front_view_image_url: deletedProduct[0].product_details!
+            .front_view_image_url,
+          description: deletedProduct[0].product_details!.description,
+          dimensions: deletedProduct[0].product_details!.dimensions,
+        },
       },
       deleted: deletedProduct ? true : false,
     };

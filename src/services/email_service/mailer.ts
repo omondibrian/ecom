@@ -23,5 +23,6 @@ export class Mailer implements IMailer {
     const res = await this.mailgun
       .messages()
       .send({ to, from, subject, text: html });
+      return res;
   }
 }

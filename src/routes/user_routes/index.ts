@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 import { generate } from "randomstring";
-import { IMailer } from "../../services/email_service/mailer";
+import { IMailer, Mailer } from "../../services/email_service/mailer";
 import { IAuthserviceUtilities } from "../../services/serviceUtility";
 import ProfileUsecase from "../../services/users_service/usecase/profile_usecase";
 import AuthenticationUsecase from "../../services/users_service/usecase/auth";
@@ -10,7 +10,7 @@ import UsersServiceRepository from "../../services/users_service/service_reposit
 import { AddVendorUsecase } from "../../services/users_service/usecase/addVendor";
 
 let utils: IAuthserviceUtilities;
-let mailer: IMailer;
+let mailer: IMailer = new Mailer();
 const userRoutes = Router();
 const repository = new UsersServiceRepository();
 const addVendor = new AddVendorUsecase(repository)

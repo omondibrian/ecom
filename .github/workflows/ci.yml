@@ -32,6 +32,8 @@ jobs:
       POSTGRES_USER: dev
       POSTGRES_DB: ecom
       JWT_SECRET: keyboard_cat
+      api: ${{secrets.API}}
+      domain: ${{secrets.DOMAIN}}
     strategy:
       matrix:
         node-version: [12.x, 14.x]
