@@ -1,3 +1,4 @@
+import { MaybeCompositeId } from "objection";
 import TableName from "../../../constants/tableNames";
 import User from "./models/user.modal";
 import Vendor from "./models/vendor.model";
@@ -8,7 +9,7 @@ export default class UsersServiceRepository
     user: User,
     options?: { enableStr?: boolean; displayId?: boolean }
   ): UsersService.UserEntity {
-    const { enableStr, displayId } = options;
+    const { enableStr, displayId } = options!;
     let { address, _id, email, name, phone_number, profile_image_url } = user;
     const {
       street_address_1,
@@ -135,7 +136,7 @@ export default class UsersServiceRepository
   }): Promise<UsersService.UserEntity> {
     const { options, updateParam } = input;
     const { field, value } = updateParam;
-    await User.query().updateAndFetchById(options._id, {
+    await User.query().updateAndFetchById(options!._id as MaybeCompositeId, {
       [field]: value,
     });
     const user = await User.query()

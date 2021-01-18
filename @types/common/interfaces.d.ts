@@ -15,6 +15,19 @@ declare namespace UsersService {
     | "phone_number"
     | "profile_image_url"
     | "address_id";
+
+    type regParams = {
+      email: string;
+      password: string;
+      phoneNumber: string;
+      name: string;
+      street_address_1: string;
+      street_address_2: string;
+      P_O_BOX: string;
+      city: string;
+      country: string;
+      profilePic: string;
+    };
   interface IUpdateField {
     field: fieldProperties;
     value: string;
