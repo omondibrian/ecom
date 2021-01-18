@@ -38,10 +38,12 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
     //TODO:add an actual payment gateway
     return order && { isPayed: true, PaymentDetails: { transcationId: "123" } };
   }
+
   async getCustName(id: string): Promise<string> {
     const user = await this.userRepo.findUser({ _id: id });
     return user.name;
   }
+
   async genOrder(
     order: OrderService.OrderEntity
   ): Promise<OrderService.OrderEntity> {
@@ -85,6 +87,7 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
       return this.productRepo.findProduct(prod._id);
     });
     const prodDetails = await Promise.all(orderedProdDetails);
+    console.log("prodDetails" + prodDetails);
     let list: {
       _id: string;
       name: string;
@@ -94,25 +97,28 @@ export class OrdersRepository implements OrderService.IOrdersRepository {
       distributor_id: string;
       QtyToBeBought: number;
     };
-    for (let prodIndex = 0; prodIndex < ordProdId.length; prodIndex++) {
-      const orderPro = ordProdId[prodIndex];
-      const details = prodDetails[prodIndex];
-      list = {
-        _id: details._id + "",
-        name: details.name,
-        price: details.price,
-        discount: details.discount,
-        vat: details.vat,
-        distributor_id: details.distributor_id,
-        QtyToBeBought: orderPro.QtyToBeBought,
-      };
-      productsList[prodIndex] = list;
+    if (prodDetails.length !== 0 && ordProdId.length !== 0) {
+      for (let prodIndex = 0; prodIndex < ordProdId.length; prodIndex++) {
+        const orderPro = ordProdId[prodIndex];
+        const details = prodDetails[prodIndex];
+        list = {
+          _id: details._id + "",
+          name: details.name,
+          price: details.price,
+          discount: details.discount,
+          vat: details.vat,
+          distributor_id: details.distributor_id,
+          QtyToBeBought: orderPro.QtyToBeBought,
+        };
+        productsList[prodIndex] = list;
+      }
     }
     return {
       cust_id: savedOrder.cust_id + "",
       productsList,
     };
   }
+
   async getOrders(distributorId: string): Promise<OrderService.OrderEntity[]> {
     // let orderEntity: OrderService.OrderEntity[];
     // let order: Order;

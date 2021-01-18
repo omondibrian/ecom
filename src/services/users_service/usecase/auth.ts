@@ -37,7 +37,7 @@ export default class AuthenticationUsecase {
     return { _id: user._id + "", token };
   }
 
-  async registeruser(newUser: UsersService.IUserModel) {
+  async registeruser(newUser: UsersService.regParams) {
     //validate the user input
     const { error } = this.utilities.registrationValidation(newUser);
     if (error) throw new TypeError(`${error.details[0].message}`);
@@ -61,8 +61,22 @@ export default class AuthenticationUsecase {
       const imageName = Date.now() + " " + newUser.profilePic;
       const image = `/uploads/${encodeURIComponent(imageName)}`;
       const user: UsersService.UserEntity = await this.repository.saveUser({
-        ...newUser,
+        name: newUser.name,
+        email: newUser.email,
+        phoneNumber: newUser.phoneNumber,
         password: encrptedPass,
+        Address: {
+          street_address_1: newUser.street_address_1,
+          street_address_2: newUser.street_address_2,
+          P_O_BOX: newUser.P_O_BOX,
+          city: {
+            name: newUser.city,
+          },
+          country: {
+            name: newUser.country,
+          },
+        },
+
         profilePic: image,
       });
 

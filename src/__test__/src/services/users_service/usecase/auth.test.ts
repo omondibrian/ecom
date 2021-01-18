@@ -28,7 +28,7 @@ class Mailer implements IMailer {
 }
 
 // Let TypeScript know mocked is an auto-mock of the module
-// const mocked = UsersTestRepository as jest.Mocked<typeof UsersTestRepository>;  
+// const mocked = UsersTestRepository as jest.Mocked<typeof UsersTestRepository>;
 // const AuthenticationService = mocked.default;  // AuthenticationService has correct TypeScript typing
 class Bcrypt {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -64,7 +64,7 @@ describe("AuthenticationUsecase", () => {
     jest.spyOn(testRepo, "findUser").mockClear();
     jest.spyOn(bcrypt, "hash").mockClear();
     jest.spyOn(testRepo, "saveUser").mockClear();
-  });   
+  });
   const newUser: UsersService.IUserModel = {
     name: "testUser",
     password: "test",
@@ -73,7 +73,7 @@ describe("AuthenticationUsecase", () => {
     _id: 1,
     Address: {
       street_address_1: "testStreet",
-      street_address_2:null,
+      street_address_2: null,
       P_O_BOX: "536-20115 TestArea",
       city: {
         name: "Nairobi",
@@ -149,7 +149,18 @@ describe("AuthenticationUsecase", () => {
     afterEach(() => {
       jest.clearAllMocks();
     });
-
+      const userToRegister:UsersService.regParams = {
+        name: newUser.name,
+        email: newUser.email,
+        phoneNumber: newUser.phoneNumber,
+        password: newUser.password,
+        street_address_1: newUser.Address.street_address_1,
+        street_address_2: newUser.Address.street_address_2,
+        P_O_BOX: newUser.Address.P_O_BOX,
+        city: newUser.Address.city.name,
+        country: newUser.Address.country.name,
+        profilePic: newUser.profilePic,
+      }
     it("should successfully register new user", async () => {
       //setup mocks
       const mockregistrationValidation = jest.spyOn(
@@ -160,9 +171,9 @@ describe("AuthenticationUsecase", () => {
         return { error: false };
       });
 
-      const result = await authService.registeruser(newUser);
+      const result = await authService.registeruser(userToRegister);
       expect(testUtilities.registrationValidation).toHaveBeenCalledWith(
-        newUser
+        userToRegister
       );
 
       expect(testRepo.findUser).toHaveBeenCalledTimes(2);
@@ -195,7 +206,7 @@ describe("AuthenticationUsecase", () => {
         };
       });
       await expect(() =>
-        authService.registeruser(newUser)
+        authService.registeruser(userToRegister)
       ).rejects.toThrowError(new TypeError("testing error"));
       mockValidation.mockClear();
     });
@@ -212,7 +223,7 @@ describe("AuthenticationUsecase", () => {
       });
       jest.spyOn(testRepo, "findUser").mockReturnValue(newUser);
       await expect(() =>
-        authService.registeruser(newUser)
+        authService.registeruser(userToRegister)
       ).rejects.toThrowError(new Error("email already exists"));
       mockValidation.mockClear();
     });
@@ -230,7 +241,7 @@ describe("AuthenticationUsecase", () => {
         throw new Error("testError");
       });
       await expect(() =>
-        authService.registeruser(newUser)
+        authService.registeruser(userToRegister)
       ).rejects.toThrowError(
         new Error(
           `${{ message: "registration unsucessfull", error: "testError" }}`

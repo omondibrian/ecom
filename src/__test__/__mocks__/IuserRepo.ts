@@ -39,7 +39,7 @@ export default class UsersTestRepository
       name,
       profilePic,
       email,
-      _id: _id + "",
+      _id: "1",
     };
   }
   UpdateUserField(inputs: {

@@ -5,13 +5,15 @@ describe("Mailer", () => {
   describe("Mailer.sendemail()", () => {
     it("should successfully send email to the reciepient  email address", async () => {
       const res = await mailer.sendemail(
-        "omondibrian392@gmail.com",
+        "noreply@api.ojaydev.net",
         "omondibrian392@gmail.com",
         "testing",
         "test test test"
       );
       console.log(res);
-      expect(res).toBeDefined()
-    },30000);
+      expect(res).toBeInstanceOf<{ id?: string; message: string }>({
+        message: "Queued. Thank you.",
+      });
+    }, 30000);
   });
 });

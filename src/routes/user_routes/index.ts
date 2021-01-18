@@ -3,13 +3,13 @@ import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 import { generate } from "randomstring";
 import { IMailer, Mailer } from "../../services/email_service/mailer";
-import { IAuthserviceUtilities } from "../../services/serviceUtility";
+import { AuthserviceUtilities, IAuthserviceUtilities } from "../../services/serviceUtility";
 import ProfileUsecase from "../../services/users_service/usecase/profile_usecase";
 import AuthenticationUsecase from "../../services/users_service/usecase/auth";
 import UsersServiceRepository from "../../services/users_service/service_repository";
 import { AddVendorUsecase } from "../../services/users_service/usecase/addVendor";
 
-let utils: IAuthserviceUtilities;
+let utils: IAuthserviceUtilities = new AuthserviceUtilities();
 let mailer: IMailer = new Mailer();
 const userRoutes = Router();
 const repository = new UsersServiceRepository();
@@ -29,9 +29,9 @@ const authUsecase = new AuthenticationUsecase(
  * @param  {UsersService.UserCredentials} req.body.credentials
  */
 userRoutes.post("/login", async (req, res, next) => {
-  const { credentials } = req.body;
+  const { email,password,phoneNumber } = req.body;
   try {
-    const result = await authUsecase.logInUser(credentials);
+    const result = await authUsecase.logInUser({email,password,phoneNumber});
     res.json(result).status(200);
   } catch (error) {
     next(error);
@@ -58,7 +58,7 @@ userRoutes.post("/register", async (req, res, next) => {
  * @description forgot password route
  * @param  {UsersService.IUserModel} req.body.credentials
  */
-userRoutes.post("/register", async (req, res, next) => {
+userRoutes.post("/forgot", async (req, res, next) => {
   const { credentials } = req.body;
   try {
     const result = await authUsecase.forgotPass(credentials);
