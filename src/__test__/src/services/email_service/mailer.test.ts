@@ -18,7 +18,7 @@ describe("Mailer", () => {
         html
       );
       console.log(res);
-      expect(res.message).toBeDefined()
+      expect(res).toBeDefined()
     }, 30000);
   });
 });
